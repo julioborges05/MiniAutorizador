@@ -12,13 +12,13 @@ public class AuthService {
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
 
-    public AuthService(BCryptPasswordEncoder encoder, UserRepository userRepository) {
-        this.encoder = encoder;
+    public AuthService(UserRepository userRepository) {
+        this.encoder = new BCryptPasswordEncoder();
         this.userRepository = userRepository;
     }
 
     public boolean validateLogin(String login, String password) {
-        User user = userRepository.findByLogin(login)
+        User user = userRepository.findByLoginAndEnabled(login, true)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
         return encoder.matches(password, user.getPassword());
