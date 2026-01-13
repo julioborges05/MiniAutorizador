@@ -2,6 +2,7 @@ package com.julioborges.autorizador.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,6 +30,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, String>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        Map<String, String> body = new HashMap<>();
+
+        if (ex.getCause() != null && ex.getCause().getMessage().contains("Duplicate entry")) {
+            log.warn("Violação de integridade detectada: {}", ex.getCause().getMessage());
+            body.put("erro", "Informação já existe");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body);
+        }
+
+        throw ex;
+    }
+
+    @ExceptionHandler(CardNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleCardNotFoundException(CardNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @ExceptionHandler(Exception.class)

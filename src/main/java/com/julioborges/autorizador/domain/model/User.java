@@ -1,4 +1,4 @@
-package com.julioborges.autorizador.model;
+package com.julioborges.autorizador.domain.model;
 
 import jakarta.persistence.*;
 
@@ -22,43 +22,11 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

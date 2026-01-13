@@ -1,6 +1,6 @@
-package com.julioborges.autorizador.repository;
+package com.julioborges.autorizador.domain.repository;
 
-import com.julioborges.autorizador.model.User;
+import com.julioborges.autorizador.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

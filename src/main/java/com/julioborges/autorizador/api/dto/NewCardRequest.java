@@ -1,4 +1,4 @@
-package com.julioborges.autorizador.controller.card.request;
+package com.julioborges.autorizador.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
