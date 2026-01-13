@@ -1,0 +1,134 @@
+type: collection.insomnia.rest/5.0
+name: Scratch Pad
+meta:
+  id: wrk_scratchpad
+  created: 1747442385346
+  modified: 1747442385346
+collection:
+  - name: Mini Autorizador
+    meta:
+      id: fld_c5604dd8b351441fa79fa3c141e2671e
+      created: 1768313982473
+      modified: 1768314037211
+      sortKey: -1768313982673
+    children:
+      - url: localhost:8080/cartoes
+        name: Criar cartao
+        meta:
+          id: req_32328a057e6a4bb99f95b8fe918fb16c
+          created: 1768225515039
+          modified: 1768314009248
+          isPrivate: false
+          sortKey: -1768314002176
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"numeroCartao": "123",
+            	"senha": "123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: basic
+          useISO88591: false
+          disabled: false
+          username: username
+          password: password
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/cartoes/123
+        name: Consultar saldo
+        meta:
+          id: req_7cf7968d785d4a5a9e384d0bddd7ba0b
+          created: 1768242735431
+          modified: 1768314007438
+          isPrivate: false
+          sortKey: -1768314002076
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: basic
+          useISO88591: false
+          disabled: false
+          username: username
+          password: password
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/transacoes
+        name: Realizar transacao
+        meta:
+          id: req_f95f8b16dfc944f7a39abb157046df05
+          created: 1768273792572
+          modified: 1768314005753
+          isPrivate: false
+          sortKey: -1768314001976
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"numeroCartao": "123",
+            	"senha": "123",
+            	"valor": 123.52222
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: basic
+          useISO88591: false
+          disabled: false
+          username: username
+          password: password
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1747442562304
+    modified: 1768158456710
+  cookies:
+    - key: JSESSIONID
+      value: DFA2F9DF639686A5B051907E793ADAD3
+      domain: localhost
+      path: /
+      httpOnly: true
+      hostOnly: true
+      creation: 2026-01-11T19:07:36.707Z
+      lastAccessed: 2026-01-11T19:07:36.707Z
+      id: 8ba6ee66-8dd1-4c4b-9a68-d633ea347b1f
+environments:
+  name: Base Environment
+  meta:
+    id: env_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1747442561953
+    modified: 1747442561953
+    isPrivate: false
