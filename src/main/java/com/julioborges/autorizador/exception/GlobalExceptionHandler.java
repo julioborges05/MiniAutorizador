@@ -21,9 +21,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleValidationError(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        ex.getBindingResult().getFieldErrors().forEach(error -> {
-            errors.put(error.getField(), error.getDefaultMessage());
-        });
+        ex.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
 
         log.warn("Erro de validação: {}", errors);
 
@@ -47,7 +45,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CardNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleCardNotFoundException(CardNotFoundException ex) {
+        log.info("Cartão não encontrado: {}", ex.getMessage());
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<String> handleTransactionAuthorizationFailedException(AuthorizationException ex) {
+        log.warn(
+                "Falha na autorização da transação. Motivo: {}",
+                ex.getReason().getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(ex.getReason().getMessage());
     }
 
     @ExceptionHandler(Exception.class)

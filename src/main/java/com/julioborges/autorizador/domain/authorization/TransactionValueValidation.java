@@ -10,12 +10,11 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component
-public class CardBalanceValidation implements AuthorizationRule {
-
+public class TransactionValueValidation implements AuthorizationRule {
     @Override
     public void validate(Card card, TransactionRequest transactionRequest) {
-        Optional.ofNullable(transactionRequest.value())
-                .filter(v -> card.getBalance().subtract(v).compareTo(BigDecimal.ZERO) >= 0)
-                .orElseThrow(() -> new AuthorizationException(AuthorizationFailed.INSUFFICIENT_BALANCE));
+        Optional.of(transactionRequest.value())
+                .filter(value -> value.compareTo(BigDecimal.ZERO) > 0)
+                .orElseThrow(() -> new AuthorizationException(AuthorizationFailed.INVALID_TRANSACTION_VALUE));
     }
 }
