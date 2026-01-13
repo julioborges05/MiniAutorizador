@@ -3,6 +3,7 @@ package com.julioborges.autorizador.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -52,12 +53,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthorizationException.class)
     public ResponseEntity<String> handleTransactionAuthorizationFailedException(AuthorizationException ex) {
-        log.warn(
-                "Falha na autorização da transação. Motivo: {}",
-                ex.getReason().getMessage()
-        );
+        log.warn("Falha na autorização da transação. Motivo: {}", ex.getReason().getMessage());
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(ex.getReason().getMessage());
+    }
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<Map<String, String>> handleOptimisticLockException(OptimisticLockingFailureException ex) {
+        log.warn("Erro de optimistic lock: {}", ex.getMessage());
+
+        Map<String, String> body = new HashMap<>();
+        body.put("erro", "O recurso foi atualizado por outra transação. Tente novamente.");
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(body);
     }
 
     @ExceptionHandler(Exception.class)
