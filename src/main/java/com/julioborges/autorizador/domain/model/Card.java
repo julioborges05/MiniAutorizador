@@ -2,6 +2,7 @@ package com.julioborges.autorizador.domain.model;
 
 import com.julioborges.autorizador.api.dto.NewCardRequest;
 import com.julioborges.autorizador.api.dto.NewCardResponse;
+import com.julioborges.autorizador.exception.AuthorizationException;
 import com.julioborges.autorizador.exception.CardInvalidException;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -63,6 +64,13 @@ public class Card {
 
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    public void debitValue(BigDecimal value) {
+        this.balance = Optional.ofNullable(value)
+                .filter(v -> this.balance.subtract(v).compareTo(BigDecimal.ZERO) >= 0)
+                .map(v -> this.balance.subtract(v))
+                .orElseThrow(() -> new AuthorizationException(AuthorizationFailed.INSUFFICIENT_BALANCE));
     }
 
     public NewCardResponse toNewCardResponse() {
