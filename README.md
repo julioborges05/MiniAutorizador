@@ -1,5 +1,7 @@
 # MiniAutorizador
 
+Decisão: Não retornar a senha do cartão no endpoint de criação do cartão por questão de segurança
+
 ## 🔐 Autenticação
 
 Este projeto utiliza **Basic Authentication** para autenticação das requisições.

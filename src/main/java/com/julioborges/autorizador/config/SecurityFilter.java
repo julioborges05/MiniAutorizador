@@ -1,6 +1,6 @@
 package com.julioborges.autorizador.config;
 
-import com.julioborges.autorizador.service.AuthService;
+import com.julioborges.autorizador.domain.service.LoginService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +20,10 @@ public class SecurityFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BASIC = "Basic ";
 
-    private final AuthService authService;
+    private final LoginService loginService;
 
-    public SecurityFilter(AuthService authService) {
-        this.authService = authService;
+    public SecurityFilter(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         String login = basicTokenValue.split(":")[0];
         String password = basicTokenValue.split(":")[1];
 
-        if (authService.validateLogin(login, password)) {
+        if (loginService.validateLogin(login, password)) {
             Authentication authentication = new UsernamePasswordAuthenticationToken(login, null, null);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
